@@ -179,8 +179,16 @@ class SortManager:
         for func_def in func_defs:
             try:
                 name = func_def["name"]
+                # Validate domain sorts exist
+                for sort_name in func_def["domain"]:
+                    if sort_name not in self.sorts:
+                        raise ValueError(f"Sort '{sort_name}' not defined")
                 domain = [self.sorts[sort] for sort in func_def["domain"]]
-                range_sort = self.sorts[func_def["range"]]
+                # Validate range sort exists
+                range_sort_name = func_def["range"]
+                if range_sort_name not in self.sorts:
+                    raise ValueError(f"Sort '{range_sort_name}' not defined")
+                range_sort = self.sorts[range_sort_name]
                 functions[name] = Function(name, *domain, range_sort)
                 logger.debug(f"Created function: {name}")
             except KeyError as e:

@@ -145,7 +145,7 @@ class TestSortManager(unittest.TestCase):
     def test_create_functions_undefined_domain_sort(self) -> None:
         """Test that function with undefined domain sort raises error."""
         func_defs = [{"name": "f", "domain": ["UndefinedSort"], "range": "IntSort"}]
-        with self.assertRaises(KeyError):
+        with self.assertRaises(ValueError):
             self.sort_manager.create_functions(func_defs)
 
     def test_create_constants_list_format(self) -> None:

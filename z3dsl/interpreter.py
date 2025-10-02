@@ -117,6 +117,16 @@ class Z3JSONInterpreter:
         if self.verifier:
             self.verifier.verify_conditions(self.solver, self.verify_timeout)
 
+    def get_verification_counts(self) -> tuple[int, int]:
+        """Get SAT and UNSAT counts from verification results.
+
+        Returns:
+            Tuple of (sat_count, unsat_count)
+        """
+        if self.verifier:
+            return (self.verifier.sat_count, self.verifier.unsat_count)
+        return (0, 0)
+
     def optimize(self) -> None:
         """Run optimization if configured."""
         if self.optimizer_runner and "optimization" in self.config:

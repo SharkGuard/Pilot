@@ -21,6 +21,8 @@ class Verifier:
         self.expression_parser = expression_parser
         self.sorts = sorts
         self.verifications: dict[str, ExprRef] = {}
+        self.sat_count: int = 0
+        self.unsat_count: int = 0
 
     def add_verifications(self, verification_defs: list[dict[str, Any]]) -> None:
         """Add verification conditions.
@@ -39,6 +41,10 @@ class Verifier:
                     exists_vars = verification["exists"]
                     if not exists_vars:
                         raise ValueError(f"Empty 'exists' list in verification '{name}'")
+                    # Validate sorts exist before creating variables
+                    for v in exists_vars:
+                        if v["sort"] not in self.sorts:
+                            raise ValueError(f"Sort '{v['sort']}' not defined")
                     variables = [Const(v["name"], self.sorts[v["sort"]]) for v in exists_vars]
                     constraint = self.expression_parser.parse_expression(
                         verification["constraint"], variables
@@ -48,6 +54,10 @@ class Verifier:
                     forall_vars = verification["forall"]
                     if not forall_vars:
                         raise ValueError(f"Empty 'forall' list in verification '{name}'")
+                    # Validate sorts exist before creating variables
+                    for v in forall_vars:
+                        if v["sort"] not in self.sorts:
+                            raise ValueError(f"Sort '{v['sort']}' not defined")
                     variables = [Const(v["name"], self.sorts[v["sort"]]) for v in forall_vars]
                     antecedent = self.expression_parser.parse_expression(
                         verification["implies"]["antecedent"], variables
@@ -82,6 +92,10 @@ class Verifier:
         For entailment checking (knowledge_base IMPLIES condition),
         check if knowledge_base AND NOT(condition) is UNSAT.
         """
+        # Reset counts at the start of verification
+        self.sat_count = 0
+        self.unsat_count = 0
+
         if not self.verifications:
             logger.info("No verifications to check")
             return
@@ -99,10 +113,12 @@ class Verifier:
                 result = solver.check(condition)
 
                 if result == sat:
+                    self.sat_count += 1
                     model = solver.model()
                     logger.info(f"{name}: SAT")
                     logger.info(f"Model: {model}")
                 elif result == unsat:
+                    self.unsat_count += 1
                     logger.info(f"{name}: UNSAT (condition contradicts knowledge base)")
                 else:
                     logger.warning(f"{name}: UNKNOWN (timeout or incomplete)")

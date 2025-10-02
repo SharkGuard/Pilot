@@ -49,7 +49,10 @@ class OptimizerRunner:
             optimization_vars = {}
             for var_def in optimization_config.get("variables", []):
                 name = var_def["name"]
-                sort = self.sorts[var_def["sort"]]
+                sort_name = var_def["sort"]
+                if sort_name not in self.sorts:
+                    raise ValueError(f"Sort '{sort_name}' not defined")
+                sort = self.sorts[sort_name]
                 optimization_vars[name] = Const(name, sort)
 
             # Build extended context: optimization variables + global context
