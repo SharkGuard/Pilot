@@ -9,10 +9,11 @@ import logging
 import sys
 import time
 from datetime import datetime
+from pathlib import Path
 from typing import Any
 
 # Add parent directory to path
-sys.path.insert(0, "/users/PAS2271/debargha/proofofthought")
+sys.path.insert(0, str(Path(__file__).parent.parent.absolute()))
 
 from examples.azure_config import get_client_config
 from z3dsl.reasoning import ProofOfThought
@@ -182,13 +183,14 @@ def save_results(results: list[dict[str, Any]], output_path: str) -> None:
 
 def main() -> None:
     """Main benchmark execution."""
-    dataset_path = "/users/PAS2271/debargha/proofofthought/strategyQA_train.json"
-    output_path = "/users/PAS2271/debargha/proofofthought/strategyqa_results.json"
+    script_dir = Path(__file__).parent
+    dataset_path = script_dir / "strategyQA_train.json"
+    output_path = script_dir / "strategyqa_results.json"
     num_questions = 100
 
     # Load questions
     print("Loading StrategyQA questions...")
-    questions = load_strategyqa_questions(dataset_path, num_questions)
+    questions = load_strategyqa_questions(str(dataset_path), num_questions)
     print(f"Loaded {len(questions)} questions")
 
     # Initialize ProofOfThought with Azure GPT-5
@@ -207,7 +209,7 @@ def main() -> None:
     print(f"Total execution time: {total_time/60:.1f} minutes\n")
 
     # Save results
-    save_results(results, output_path)
+    save_results(results, str(output_path))
 
 
 if __name__ == "__main__":
