@@ -1,0 +1,16 @@
+{
+  "sorts": [
+    {"name": "BV8", "type": "BitVecSort(8)"}
+  ],
+  "variables": [
+    {"name": "x", "sort": "BV8"}
+  ],
+  "knowledge_base": [],
+  "verifications": [
+    {
+      "name": "BitVec Test",
+      "constraint": "x == x"
+    }
+  ],
+  "actions": ["verify_conditions"]
+}

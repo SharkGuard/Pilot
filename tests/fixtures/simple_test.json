@@ -1,0 +1,25 @@
+{
+  "sorts": [
+    {"name": "MySort", "type": "DeclareSort"}
+  ],
+  "functions": [
+    {"name": "f", "domain": ["MySort"], "range": "IntSort"}
+  ],
+  "constants": {
+    "values": {
+      "sort": "MySort",
+      "members": ["a", "b"]
+    }
+  },
+  "knowledge_base": [
+    "f(a) == 10",
+    "f(b) == 20"
+  ],
+  "verifications": [
+    {
+      "name": "Check Greater",
+      "constraint": "f(b) > f(a)"
+    }
+  ],
+  "actions": ["verify_conditions"]
+}

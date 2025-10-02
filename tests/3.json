@@ -1,0 +1,26 @@
+{
+    "sorts": [
+      {"name": "Year", "type": "DeclareSort"},
+      {"name": "Int", "type": "IntSort"}
+    ],
+    "functions": [
+      {"name": "unemployment_rate", "domain": ["Year"], "range": "Int"}
+    ],
+    "constants": {
+      "years": {
+        "sort": "Year",
+        "members": ["year_2009", "year_1932"]
+      }
+    },
+    "knowledge_base": [
+      "unemployment_rate(year_2009) == 9",
+      "unemployment_rate(year_1932) == 25"
+    ],
+    "verifications": [
+      {
+        "name": "Compare Unemployment Rates",
+        "constraint": "unemployment_rate(year_1932) > unemployment_rate(year_2009)"
+      }
+    ],
+    "actions": ["verify_conditions"]
+  }

@@ -1,0 +1,20 @@
+{
+  "sorts": [
+    {"name": "Color", "type": "EnumSort", "values": ["red", "green", "blue"]}
+  ],
+  "functions": [
+    {"name": "brightness", "domain": ["Color"], "range": "IntSort"}
+  ],
+  "knowledge_base": [
+    "brightness(red) == 100",
+    "brightness(green) == 50",
+    "brightness(blue) == 75"
+  ],
+  "verifications": [
+    {
+      "name": "Red is brightest",
+      "constraint": "And(brightness(red) > brightness(green), brightness(red) > brightness(blue))"
+    }
+  ],
+  "actions": ["verify_conditions"]
+}
