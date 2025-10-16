@@ -3,9 +3,9 @@
 LLM-driven Z3 DSL program generation and interactive theorem proving.
 
 SharkGuard Pilot is an advanced system that leverages Large Language Models (LLMs) to translate natural language questions into formal Z3 DSL (Domain-Specific Language) programs. It then uses the Z3 theorem prover to answer complex reasoning tasks. 
-> ***This project introduces interactive knowledge base management, allowing LLMs to propose extensions to the system's knowledge base, functions, and constants, with explicit user confirmation and diff previews.***
-> pls see https://github.com/SharkGuard/Pilot/issues/1 for current status
-
+> - ***This project introduces interactive knowledge base management, allowing LLMs to propose extensions to the system's knowledge base, functions, and constants, with explicit user confirmation and diff previews.***
+> - pls see https://github.com/SharkGuard/Pilot/issues/1 for current status
+> - rest of the readme is mostly a placeholder and bullshit
 ## Features
 
 *   **LLM-Driven Program Generation**: Convert natural language questions into structured Z3 DSL JSON programs.
