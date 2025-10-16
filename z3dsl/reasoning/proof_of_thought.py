@@ -6,7 +6,7 @@ import os
 import tempfile
 import traceback
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, Optional
 
 from z3dsl.reasoning.program_generator import Z3ProgramGenerator
 from z3dsl.reasoning.verifier import Z3Verifier
@@ -19,14 +19,14 @@ class QueryResult:
     """Result of a reasoning query."""
 
     question: str
-    answer: bool | None
-    json_program: dict[str, Any] | None
+    answer: Optional[bool]
+    json_program: Optional[dict[str, Any]]
     sat_count: int
     unsat_count: int
     output: str
     success: bool
     num_attempts: int
-    error: str | None = None
+    error: Optional[str] = None
 
 
 class ProofOfThought:
@@ -52,7 +52,7 @@ class ProofOfThought:
         max_attempts: int = 3,
         verify_timeout: int = 10000,
         optimize_timeout: int = 100000,
-        cache_dir: str | None = None,
+        cache_dir: Optional[str] = None,
     ) -> None:
         """Initialize ProofOfThought.
 
@@ -78,7 +78,7 @@ class ProofOfThought:
         temperature: float = 0.1,
         max_tokens: int = 16384,
         save_program: bool = False,
-        program_path: str | None = None,
+        program_path: Optional[str] = None,
     ) -> QueryResult:
         """Answer a reasoning question using Z3 theorem proving.
 
@@ -94,8 +94,8 @@ class ProofOfThought:
         """
         logger.info(f"Processing question: {question}")
 
-        previous_response: str | None = None
-        error_trace: str | None = None
+        previous_response: Optional[str] = None
+        error_trace: Optional[str] = None
 
         for attempt in range(1, self.max_attempts + 1):
             logger.info(f"Attempt {attempt}/{self.max_attempts}")

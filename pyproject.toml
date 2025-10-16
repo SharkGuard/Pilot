@@ -25,3 +25,9 @@ no_implicit_optional = true
 ignore_missing_imports = true
 # Skip virtual environment
 exclude = "env/"
+
+[tool.poetry]
+name = "proofofthought"
+version = "0.1.0"
+packages = [{ include = "z3dsl" }]
+dependencies = { "python" = "^3.9", "z3-solver" = "4.15.3.0", "litellm" = { version = "1.40.14", python = ">=3.8" }, "numpy" = "^1.26.0" , "openai" = {version="2.0.1", python = ">=3.8" },"scikit-learn" = "*", "google-generativeai" = "*" }

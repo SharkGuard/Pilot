@@ -26,6 +26,8 @@ from z3dsl.security.validator import ExpressionValidator
 logger = logging.getLogger(__name__)
 
 
+from typing import Optional
+
 class ExpressionParser:
     """Parses and evaluates Z3 expressions from strings."""
 
@@ -66,7 +68,7 @@ class ExpressionParser:
         """Mark that all symbols have been loaded and enable caching."""
         self._symbols_loaded = True
 
-    def build_context(self, quantified_vars: list[ExprRef] | None = None) -> dict[str, Any]:
+    def build_context(self, quantified_vars: Optional[list[ExprRef]] = None) -> dict[str, Any]:
         """Build evaluation context with all defined symbols.
 
         Args:
@@ -107,7 +109,7 @@ class ExpressionParser:
         return context
 
     def parse_expression(
-        self, expr_str: str, quantified_vars: list[ExprRef] | None = None
+        self, expr_str: str, quantified_vars: Optional[list[ExprRef]] = None
     ) -> ExprRef:
         """Parse expression string into Z3 expression.
 

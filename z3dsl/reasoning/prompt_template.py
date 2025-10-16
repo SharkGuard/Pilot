@@ -84,6 +84,27 @@ This document provides comprehensive guidelines for generating JSON-based Domain
 
 ---
 
+### **Security Guidelines: Restricting LLM Generation**
+
+To ensure the integrity and security of the generated programs, the LLM must adhere to the following strict guidelines regarding the generation of `knowledge_base`, `functions`, and `constants`:
+
+1.  **Knowledge Base Generation**:
+    *   The LLM **MUST NOT** generate any `knowledge_base` entries unless they are explicitly provided or directly implied by the user's question.
+    *   Avoid introducing new facts or axioms that are not derivable from the user's input.
+
+2.  **Function Generation**:
+    *   The LLM **MUST NOT** generate new `functions` unless they are explicitly defined or clearly required by the user's question.
+    *   Any generated functions must be directly related to the user's query and not arbitrary additions.
+
+3.  **Constants Generation**:
+    *   The LLM **MUST NOT** generate new `constants` unless they are explicitly mentioned or directly inferable from the user's question.
+    *   Constants should represent specific entities or values provided in the user's context.
+
+**Example Scenario**:
+If a user asks about a "networking LLM" and provides details about their "subnet," the LLM *may* infer and generate constants or functions related to subnet masks, IP addresses, or maximum hosts, as these are directly relevant user parameters. However, it should not generate unrelated networking concepts.
+
+---
+
 ### **Detailed Explanation of Each Section**
 
 1. **Sorts**

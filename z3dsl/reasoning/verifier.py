@@ -4,6 +4,7 @@ import io
 import logging
 from contextlib import redirect_stderr, redirect_stdout
 from dataclasses import dataclass
+from typing import Optional
 
 from z3dsl.interpreter import Z3JSONInterpreter
 
@@ -14,12 +15,12 @@ logger = logging.getLogger(__name__)
 class VerificationResult:
     """Result of Z3 verification execution."""
 
-    answer: bool | None  # True (SAT), False (UNSAT), or None (ambiguous/error)
+    answer: Optional[bool]  # True (SAT), False (UNSAT), or None (ambiguous/error)
     sat_count: int
     unsat_count: int
     output: str
     success: bool
-    error: str | None = None
+    error: Optional[str] = None
 
 
 class Z3Verifier:
@@ -85,7 +86,7 @@ class Z3Verifier:
                 error=str(e),
             )
 
-    def _determine_answer(self, sat_count: int, unsat_count: int) -> bool | None:
+    def _determine_answer(self, sat_count: int, unsat_count: int) -> Optional[bool]:
         """Determine boolean answer from SAT/UNSAT counts.
 
         Args:

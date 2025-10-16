@@ -4,7 +4,7 @@ import json
 import logging
 import os
 from dataclasses import dataclass, field
-from typing import Any
+from typing import Any, Optional, Union
 
 import numpy as np
 from sklearn.metrics import (
@@ -70,11 +70,11 @@ class EvaluationPipeline:
 
     def evaluate(
         self,
-        dataset: list[dict[str, Any]] | str,
+        dataset: Union[list[dict[str, Any]], str],
         question_field: str = "question",
         answer_field: str = "answer",
-        id_field: str | None = None,
-        max_samples: int | None = None,
+        id_field: Optional[str] = None,
+        max_samples: Optional[int] = None,
         skip_existing: bool = True,
     ) -> EvaluationResult:
         """Evaluate on a dataset.

@@ -2,7 +2,7 @@
 
 import json
 import logging
-from typing import Any
+from typing import Any, Optional
 
 from z3dsl.dsl.expressions import ExpressionParser
 from z3dsl.dsl.sorts import SortManager
@@ -24,7 +24,7 @@ class Z3JSONInterpreter:
     def __init__(
         self,
         json_file: str,
-        solver: AbstractSolver | None = None,
+        solver: Optional[AbstractSolver] = None,
         verify_timeout: int = DEFAULT_VERIFY_TIMEOUT,
         optimize_timeout: int = DEFAULT_OPTIMIZE_TIMEOUT,
     ):
@@ -44,9 +44,9 @@ class Z3JSONInterpreter:
 
         # Initialize components
         self.sort_manager = SortManager()
-        self.expression_parser: ExpressionParser | None = None
-        self.verifier: Verifier | None = None
-        self.optimizer_runner: OptimizerRunner | None = None
+        self.expression_parser: Optional[ExpressionParser] = None
+        self.verifier: Optional[Verifier] = None
+        self.optimizer_runner: Optional[OptimizerRunner] = None
 
     def load_and_validate_json(self, json_file: str) -> dict[str, Any]:
         """Load and validate JSON configuration file.
